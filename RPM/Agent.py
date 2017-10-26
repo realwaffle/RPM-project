@@ -334,21 +334,30 @@ class Agent:
                     sizeDiff = (1 - .1 * math.fabs(len(cand) - len(test_sol)))
                     subscore *= sizeDiff
                     subscoreList.append(subscore)
-                print(i)
-                print("subscore", subscore)
+                #print(i)
+                #print("subscore", subscore)
                 scores[i] += max(subscoreList)
         return scores
     def Solve(self,problem):
+        print("problem name ", problem.name)
+        print("Challenge Problem C" in problem.name)
         figures, solutions = initialize(problem)
         A_att = {}
         B_att = {}
         C_att = {}
+        D_att = {}
+        E_att = {}
+        F_att = {}
+        G_att = {}
+        H_att = {}
         _1_att = {}
         _2_att = {}
         _3_att = {}
         _4_att = {}
         _5_att = {}
         _6_att = {}
+        _7_att = {}
+        _8_att = {}
         for figure in figures:
             for ravenOb in figure.objects:
                 #print(ravenOb)
@@ -360,7 +369,17 @@ class Agent:
                     B_att[name] = figure.objects[ravenOb].attributes
                 if (figure.name == 'C'):
                     C_att[name] = figure.objects[ravenOb].attributes
-                
+                if (figure.name == 'D'):
+                    A_att[name] = figure.objects[ravenOb].attributes
+                if (figure.name == 'E'):
+                    B_att[name] = figure.objects[ravenOb].attributes
+                if (figure.name == 'F'):
+                    C_att[name] = figure.objects[ravenOb].attributes
+                if (figure.name == 'G'):
+                    A_att[name] = figure.objects[ravenOb].attributes
+                if (figure.name == 'H'):
+                    B_att[name] = figure.objects[ravenOb].attributes
+
             #fAtt[figure.name] = figure.objects.values()[0].attributes
         for solution in solutions:
             for ravenObs in solution.objects:
@@ -377,44 +396,51 @@ class Agent:
                     _5_att[name] = solution.objects[ravenObs].attributes
                 if (solution.name == '6'):
                     _6_att[name] = solution.objects[ravenObs].attributes
-        solutions = [ _1_att, _2_att, _3_att, _4_att, _5_att, _6_att]
-        transforms = {}
-        print("Problem ", problem.name)
-        gen_sol = self.get_all_transforms(A_att, B_att, C_att, 1)
-        gen_sol2 = self.get_all_transforms(A_att, C_att, B_att, 0)
-        scores = self.get_score(gen_sol, solutions)
-        scores2 = self.get_score(gen_sol2, solutions)
-        sum_score_1 = float(numpy.sum(scores))
-        sum_score_2 = float(numpy.sum(scores2))
-        formatted_list = []
-        formatted_list2 = []
-        formatted_list3 = []
-        if (sum_score_1 > 0):
-            scores = [x/sum_score_1 for x in scores]
-            for item in scores:
-                formatted_list.append("%.3f"%item)
-        if (sum_score_2 > 0):
-            scores2 = [x/sum_score_2 for x in scores2]
-            for item in scores2:
-                formatted_list2.append("%.3f"%item)
-        finalScore = [0, 0, 0, 0, 0, 0]
-        for i in range(len(finalScore)):
-            finalScore[i] = scores[i] * scores2[i]
-        for item in finalScore:
-            formatted_list3.append("%.3f"%item)
-        score = finalScore.index(max(finalScore)) + 1
-        #scores = [a*b for a,b in zip(scores,scores2)]
-        print("A -> B")
-        print("solution horizontal", gen_sol2)
-        print("A -> C")
-        print("solution vertical", gen_sol)
-        print("\n")
-        print("scores: A -> B", formatted_list)
-        print("scores: A -> C", formatted_list2)
-        print("FINAL SCORE")
-        print(formatted_list3)
-        print(score)
-        print("\n\n")
+                if (solution.name == '7'):
+                    _6_att[name] = solution.objects[ravenObs].attributes
+                if (solution.name == '8'):
+                    _6_att[name] = solution.objects[ravenObs].attributes
+        score = 3
+        if ("B-" in problem.name):
+            solutions = [ _1_att, _2_att, _3_att, _4_att, _5_att, _6_att]
+            transforms = {}
+            gen_sol = self.get_all_transforms(A_att, B_att, C_att, 1)
+            gen_sol2 = self.get_all_transforms(A_att, C_att, B_att, 0)
+            scores = self.get_score(gen_sol, solutions)
+            scores2 = self.get_score(gen_sol2, solutions)
+            sum_score_1 = float(numpy.sum(scores))
+            sum_score_2 = float(numpy.sum(scores2))
+            formatted_list = []
+            formatted_list2 = []
+            formatted_list3 = []
+            if (sum_score_1 > 0):
+                scores = [x/sum_score_1 for x in scores]
+                for item in scores:
+                    formatted_list.append("%.3f"%item)
+            if (sum_score_2 > 0):
+                scores2 = [x/sum_score_2 for x in scores2]
+                for item in scores2:
+                    formatted_list2.append("%.3f"%item)
+            finalScore = [0, 0, 0, 0, 0, 0]
+            for i in range(len(finalScore)):
+                finalScore[i] = scores[i] * scores2[i]
+            for item in finalScore:
+                formatted_list3.append("%.3f"%item)
+            score = finalScore.index(max(finalScore)) + 1
+            #scores = [a*b for a,b in zip(scores,scores2)]
+            #print("A -> B")
+            #print("solution horizontal", gen_sol2)
+            #print("A -> C")
+            #print("solution vertical", gen_sol)
+            #print("\n")
+            #print("scores: A -> B", formatted_list)
+            #print("scores: A -> C", formatted_list2)
+            print("FINAL SCORE")
+            #print(formatted_list3)
+            print(score)
+            print("\n\n")
+        elif ("C-" in problem.name):
+            print("here CCCC")
         #print("\n\n\n\n\n\n\n")
         """
         print(gen_sol)
